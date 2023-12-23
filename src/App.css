@@ -6,6 +6,19 @@
   margin: 20px 0;
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #f3f3f3;
+}
+
+.input {
+  width: 500px;
+  padding: 8px;
+}
+
 .App {
   text-align: center;
 }

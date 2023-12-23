@@ -5,6 +5,8 @@ import Card from "./components/Card";
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
 
   const fetchData = async () => {
     try {
@@ -16,17 +18,43 @@ function App() {
     }
   };
 
+  const searchCountries = (searchKey) => {
+    if (countries.length && searchKey !== "") {
+      const filteredItems = countries.filter((country) =>
+        country.name.common.toLowerCase().includes(searchKey.toLowerCase())
+      );
+      setFilteredCountries(filteredItems);
+    } else {
+      setFilteredCountries([...countries]);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    searchCountries(searchKey);
+  }, [searchKey]);
+
   return (
-    <div className="countries-page">
-      {countries &&
-        countries.map((country) => (
-          <Card img={country.flags.png} name={country.name.common} />
-        ))}
-    </div>
+    <>
+      <div className="header">
+        <input
+          className="input"
+          type="text"
+          placeholder="Search for countries..."
+          value={searchKey}
+          onChange={(e) => setSearchKey(e.target.value)}
+        />
+      </div>
+      <div className="countries-page">
+        {countries.length &&
+          filteredCountries.map((country) => (
+            <Card img={country.flags.png} name={country.name.common} />
+          ))}
+      </div>
+    </>
   );
 }
 
