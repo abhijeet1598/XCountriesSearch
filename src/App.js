@@ -13,6 +13,7 @@ function App() {
       const response = await fetch("https://restcountries.com/v3.1/all");
       const data = await response.json();
       setCountries(data);
+      setFilteredCountries(data);
     } catch (err) {
       console.error(err);
     }
@@ -31,7 +32,6 @@ function App() {
 
   useEffect(() => {
     fetchData();
-    searchCountries("");
   }, []);
 
   useEffect(() => {
@@ -52,7 +52,15 @@ function App() {
       <div className="countries-page">
         {countries.length &&
           filteredCountries.map((country) => (
-            <Card img={country.flags.png} name={country.name.common} />
+            <div className="card" key={country.ccn3}>
+              <img
+                src={country.flags.png}
+                alt={country.name.common}
+                width={100}
+                height={100}
+              />
+              <p>{country.name.common}</p>
+            </div>
           ))}
       </div>
     </>
