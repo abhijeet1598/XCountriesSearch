@@ -31,6 +31,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
+    searchCountries("");
   }, []);
 
   useEffect(() => {
